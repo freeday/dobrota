@@ -1,22 +1,12 @@
 <template>
   <div class="traffic-light" :class="`${$route.params.id}-active`">
     <div
-      class="item red"
-      :class="seconds[0] < 3 && seconds[0] > 0 ? 'pulse' : ''"
+      v-for="(color, i) in colors"
+      :key="i"
+      class="item"
+      :class="[color, seconds[i] < 3 && seconds[i] > 0 ? 'pulse' : '']"
     >
-      <span v-if="seconds[0] > 0">{{ seconds[0] }}</span>
-    </div>
-    <div
-      class="item orange"
-      :class="seconds[1] < 3 && seconds[1] > 0 ? 'pulse' : ''"
-    >
-      <span v-if="seconds[1] > 0">{{ seconds[1] }}</span>
-    </div>
-    <div
-      class="item green"
-      :class="seconds[2] < 3 && seconds[2] > 0 ? 'pulse' : ''"
-    >
-      <span v-if="seconds[2] > 0">{{ seconds[2] }}</span>
+      <span v-if="seconds[i] > 0">{{ seconds[i] }}</span>
     </div>
   </div>
 </template>
