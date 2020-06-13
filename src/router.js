@@ -9,7 +9,7 @@ export default new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
-    { path: "/", redirect: "/red" },
+    { path: "/", redirect: localStorage.getItem("color") || "/red" },
     { path: "/:id(green|red|orange)", component: TrafficLight },
     {
       path: "/404",

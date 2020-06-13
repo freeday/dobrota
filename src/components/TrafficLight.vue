@@ -45,7 +45,10 @@ export default {
     iniCurrentSec() {
       const storage_sec = parseInt(localStorage.getItem("sec"));
       this.seconds[this.current_idx] =
-        storage_sec > 0 ? storage_sec : this.delays[this.current_idx];
+        localStorage.getItem("color") === this.$route.params.id &&
+        storage_sec > 0
+          ? storage_sec
+          : this.delays[this.current_idx];
       this.seconds = this.seconds.slice();
     },
     startTimer() {
@@ -78,12 +81,17 @@ export default {
     },
     startTraffic() {
       this.setDirectionToLocalStorage();
-      const id = setInterval(() => {
+      localStorage.setItem("color", this.colors[this.current_idx]);
+      const intervalId = setInterval(() => {
+        clearInterval(intervalId);
         this.setDirection();
         this.setCounter();
         this.startTimer();
-        this.$router.push(`/${this.colors[this.current_idx]}`);
-        clearInterval(id);
+
+        const color = this.colors[this.current_idx];
+        this.$route.params.id !== color &&
+          this.$router.push({ path: `/${color}` });
+
         this.iniCurrentSec();
         this.startTraffic();
       }, this.seconds[this.current_idx] * 1000);

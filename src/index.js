@@ -6,10 +6,13 @@ Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
   if (to.redirectedFrom === "/") {
+    localStorage.setItem("color", "red");
     localStorage.setItem("direction", "down");
-    localStorage.setItem("sec", 10);
+    localStorage.setItem("sec", "10");
+    next({ path: "/red" });
+  } else {
+    next();
   }
-  next();
 });
 
 new Vue({
